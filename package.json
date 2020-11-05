@@ -1,0 +1,21 @@
+{
+    "name": "vp.tracker",
+    "version": "0.1.0",
+    "description": "VPluse Tracker - Parse audit and track hands for pokersites",
+    "main": "main.js",
+    "scripts": {
+        "s": "electron ."
+    },
+    "repository": "auditor.vpluseteam.com",
+    "keywords": [
+        "VPluse",
+        "audit",
+        "tracker",
+        "pokersites"
+    ],
+    "author": "dispbd",
+    "devDependencies": {
+        "electron": "^10.1.5",
+        "electron-reloader": "^1.0.1"
+    }
+}

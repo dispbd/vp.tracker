@@ -1,0 +1,12 @@
+.vscode
+tmp
+node_modules
+package-lock.json
+debug.js.json
+debug.pid
+release.js.json
+release.pid
+databases
+logs
+_front-crm
+acme-challenge
