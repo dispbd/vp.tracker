@@ -7,8 +7,8 @@ window.api.send("toMain", "some data"); // Send a message to the main process
 
 $('.top.menu .item').tab({
   'onLoad': function(path, arr, history) {
-    //noAuth()
-    //if (path != 'third')
+    noAuth()
+      //if (path != 'third')
   }
 });
 
