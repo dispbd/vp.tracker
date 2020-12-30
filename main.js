@@ -38,8 +38,9 @@ async function createWindow() {
     // In main process.
   });
 
-  view.webContents.on('ready-to-show', (event) => {
-    console.log(event, status, 'ready-to-show');
+  view.webContents.once('ready-to-show', (event) => {
+    //console.log(event, status, 'ready-to-show');
+    console.log(event);
 
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
