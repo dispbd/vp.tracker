@@ -90,7 +90,7 @@ ipcMain.on("toMain", (event, args) => {
 function contentload(webview) {
   console.log('contentload', webview);
 
-  webview.executeScript({
+  webview.executeJavaScript({
     code: `( () => {
                     var parse = {};
                     var temp = document.querySelector('#user-block .identity .name');
