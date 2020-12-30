@@ -250,10 +250,9 @@ function goPage(category, page) {
     '&history_date_to_month=' + (finishDate.getMonth() + 1) +
     '&history_date_to_year=' + finishDate.getFullYear() +
     '&parser=true';
-  // webview.executeScript({
-  //   code: 'location.href = "' + url + '"'
-  // });
-  return 'location.href = "' + url + '"';
+  webview.executeScript({
+    code: 'location.href = "' + url + '"'
+  });
 }
 
 function finishParse(results) {
