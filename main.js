@@ -38,15 +38,15 @@ async function createWindow() {
 
   view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
 
-  // ipcMain.on('asynchronous-message', (event, arg) => {
-  //     console.log(arg) // prints "ping"
-  //     event.reply('asynchronous-reply', 'pong')
-  // })
+  ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+    event.reply('asynchronous-reply', 'pong')
+  })
 
-  // ipcMain.on('synchronous-message', (event, arg) => {
-  //     console.log(arg) // prints "ping"
-  //     event.returnValue = 'pong'
-  // })
+  ipcMain.on('synchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+    event.returnValue = 'pong'
+  })
 
 
   const viewAnchor = { x: 0, y: 100 };

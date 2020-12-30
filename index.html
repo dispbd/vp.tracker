@@ -2,181 +2,180 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-a1b2c3d4'" />
-    <script nonce="a1b2c3d4" src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script nonce="a1b2c3d4" src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-a1b2c3d4'" />
+  <script nonce="a1b2c3d4" src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+  <script nonce="a1b2c3d4" src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
 
-    <style>
-        html {
-            height: 100%;
-        }
-        
-        body {
-            min-height: 100%;
-            overflow: hidden;
-        }
-        
-        webview {
-            min-height: 100%;
-            overflow: hidden!important;
-        }
-        
-        .ui.grid,
-        .tab.active {
-            height: 100%;
-        }
-        
-        .ui.grid.dates .row {
-            padding-bottom: 0px;
-        }
-        
-        #startParsing {
-            margin-bottom: 10px;
-        }
-        
-        #Auth {
-            margin: 0px;
-            padding-top: 0px;
-        }
-    </style>
+  <style>
+    html {
+      height: 100%;
+    }
+    
+    body {
+      min-height: 100%;
+      overflow: hidden;
+    }
+    
+    webview {
+      min-height: 100%;
+      overflow: hidden!important;
+    }
+    
+    .ui.grid,
+    .tab.active {
+      height: 100%;
+    }
+    
+    .ui.grid.dates .row {
+      padding-bottom: 0px;
+    }
+    
+    #startParsing {
+      margin-bottom: 10px;
+    }
+    
+    #Auth {
+      margin: 0px;
+      padding-top: 0px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="ui top attached tabular menu">
-        <a class="item active" data-tab="1">Winamax</a>
-        <a class="item" data-tab="2">PokerStars</a>
-        <a class="item" data-tab="3">GGpoker</a>
-    </div>
+  <div class="ui top attached tabular menu">
+    <a class="item active" data-tab="1">Winamax</a>
+    <a class="item" data-tab="2">PokerStars</a>
+    <a class="item" data-tab="3">GGpoker</a>
+  </div>
 
 
-    <div class="ui bottom attached segment tab active" data-tab="1">
+  <div class="ui bottom attached segment tab active" data-tab="1">
 
-        <div class="ui equal width grid">
-            <div class="column">
-                <div class="ui basic fitted segment transition hidden" id="noAuth">
-                    <div class="ui negative message">
-                        <div class="header">
-                            Вы не вошли в аккаунт!!!
-                        </div>
-                        <p>Авторизуйтесь, чтобы начать парсинг аудита Winamax!</p>
-                    </div>
-                    <!--button class="fluid ui button" id="goRef">Войти в аккаунт</button-->
-                </div>
-
-                <div class="ui basic fitted segment transition hidden" id="Auth">
-
-                    <div class="ui stackable two column grid dates">
-                        <div class="column">
-                            <div>
-                                <div class="ui form">
-
-                                    <div class="ui stackable equal width grid">
-                                        <div class="row">
-                                            <div class="center aligned six wide column">
-                                                <b>Выберите месяц</b>
-                                            </div>
-                                            <div class="center aligned column">
-                                                <b>Или определите период</b>
-                                            </div>
-                                        </div>
-                                        <div class="centered row">
-                                            <div class="six wide column">
-                                                <div class="ui calendar" id="month_year_calendar">
-                                                    <div class="ui fluid input left icon">
-                                                        <i class="calendar icon"></i>
-                                                        <input type="text" placeholder="Date">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="column">
-                                                <div class="ui calendar" id="startDate">
-                                                    <div class="ui fluid input left icon">
-                                                        <i class="calendar icon"></i>
-                                                        <input type="text" placeholder="Start">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="column">
-                                                <div class="ui calendar" id="finishDate">
-                                                    <div class="ui fluid input left icon">
-                                                        <i class="calendar icon"></i>
-                                                        <input type="text" placeholder="End">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="column">
-                                                <button class="fluid ui button" id="startParsing">Обработать</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="transition hidden" id="msg">
-                                <div class="ui message">
-
-                                    <div class="content transition hidden start">
-                                        <div class="ui header">
-                                            <em data-emoji="grin" class="loading"></em>
-                                            <em data-emoji="grin" class="loading"></em>
-                                            <em data-emoji="grin" class="loading"></em> Идет обработка...<br/>
-                                        </div>
-                                        <p>Пожалуйста, дождитесь окончания и не закрывайте программу!</p>
-                                        <div class="header"><span class="ui red text" id="status"></span></div>
-                                    </div>
-
-                                    <div class="content transition hidden finishOn">
-                                        <div class="ui header green">
-                                            <em data-emoji="thumbsup"></em>
-                                            <em data-emoji="thumbsup"></em>
-                                            <em data-emoji="thumbsup"></em> Обработка успешно завершена!!!
-                                        </div><br>
-                                        <p>Аудит автоматически отправлен администрации!<br>Программу можно закрыть!</p>
-                                    </div>
-                                    <div class="content transition hidden finishOff">
-                                        <div class="ui header red">
-                                            <em data-emoji="worried"></em>
-                                            <em data-emoji="worried"></em>
-                                            <em data-emoji="worried"></em> Сервер VPluse не доступен!
-                                        </div>
-                                        <div class="header">Аудит сохранен в папке <span class="ui red text" id="path"></span>!<br>Свяжитесь с администрацией и отправьте файл вручную! <br>Программу можно закрыть!</div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+    <div class="ui equal width grid">
+      <div class="column">
+        <div class="ui basic fitted segment transition hidden" id="noAuth">
+          <div class="ui negative message">
+            <div class="header">
+              Вы не вошли в аккаунт!!!
             </div>
-
-            <div class="row" style="height:100%">
-                <div class="column">
-                    <div class="indicator"></div>
-                </div>
-
-            </div>
+            <p>Авторизуйтесь, чтобы начать парсинг аудита Winamax!</p>
+          </div>
+          <!--button class="fluid ui button" id="goRef">Войти в аккаунт</button-->
         </div>
 
+        <div class="ui basic fitted segment transition hidden" id="Auth">
+
+          <div class="ui stackable two column grid dates">
+            <div class="column">
+              <div>
+                <div class="ui form">
+
+                  <div class="ui stackable equal width grid">
+                    <div class="row">
+                      <div class="center aligned six wide column">
+                        <b>Выберите месяц</b>
+                      </div>
+                      <div class="center aligned column">
+                        <b>Или определите период</b>
+                      </div>
+                    </div>
+                    <div class="centered row">
+                      <div class="six wide column">
+                        <div class="ui calendar" id="month_year_calendar">
+                          <div class="ui fluid input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Date">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="column">
+                        <div class="ui calendar" id="startDate">
+                          <div class="ui fluid input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Start">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="column">
+                        <div class="ui calendar" id="finishDate">
+                          <div class="ui fluid input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="End">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="column">
+                        <button class="fluid ui button" id="startParsing">Обработать</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="transition hidden" id="msg">
+                <div class="ui message">
+
+                  <div class="content transition hidden start">
+                    <div class="ui header">
+                      <em data-emoji="grin" class="loading"></em>
+                      <em data-emoji="grin" class="loading"></em>
+                      <em data-emoji="grin" class="loading"></em> Идет обработка...<br/>
+                    </div>
+                    <p>Пожалуйста, дождитесь окончания и не закрывайте программу!</p>
+                    <div class="header"><span class="ui red text" id="status"></span></div>
+                  </div>
+
+                  <div class="content transition hidden finishOn">
+                    <div class="ui header green">
+                      <em data-emoji="thumbsup"></em>
+                      <em data-emoji="thumbsup"></em>
+                      <em data-emoji="thumbsup"></em> Обработка успешно завершена!!!
+                    </div><br>
+                    <p>Аудит автоматически отправлен администрации!<br>Программу можно закрыть!</p>
+                  </div>
+                  <div class="content transition hidden finishOff">
+                    <div class="ui header red">
+                      <em data-emoji="worried"></em>
+                      <em data-emoji="worried"></em>
+                      <em data-emoji="worried"></em> Сервер VPluse не доступен!
+                    </div>
+                    <div class="header">Аудит сохранен в папке <span class="ui red text" id="path"></span>!<br>Свяжитесь с администрацией и отправьте файл вручную! <br>Программу можно закрыть!</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" style="height:100%">
+        <div class="column">
+          <div class="indicator"></div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="ui bottom attached segment tab" data-tab="2">
-        <div></div>
-    </div>
-    <div class="ui bottom attached segment tab" data-tab="3">
-        <div></div>
-    </div>
-    <script nonce="a1b2c3d4">
-    </script>
-    <script nonce="a1b2c3d4" src="renderer.js"></script>
+  </div>
 
+  <div class="ui bottom attached segment tab" data-tab="2">
+    <div></div>
+  </div>
+  <div class="ui bottom attached segment tab" data-tab="3">
+    <div></div>
+  </div>
+  <script nonce="a1b2c3d4">
+  </script>
+  <script nonce="a1b2c3d4" src="renderer.js"></script>
 </body>
 
 </html>
