@@ -34,20 +34,22 @@ async function createWindow() {
     status = false
     console.log('did-fail-load');
     mainWindow.webContents.send("fromMain", 'did-fail-load');
+    console.log(event.sender.getURL());
 
     // In main process.
   });
 
-  view.webContents.once('ready-to-show', (event) => {
+  view.webContents.once('did-finish-load', (event) => {
     //console.log(event, status, 'ready-to-show');
-    console.log(event.sender);
+    console.log(event.sender.getURL());
 
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
   });
 
-  view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
+  //view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
+  view.webContents.loadURL('https://www.google.com/');
 
 }
 
