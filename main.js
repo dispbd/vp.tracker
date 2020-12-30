@@ -38,7 +38,7 @@ async function createWindow() {
     // In main process.
   });
 
-  view.webContents.on('did-stop-loading', (event) => {
+  view.webContents.on('render-process-gone', (event) => {
     console.log(event, status, 'ready-to-show');
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
