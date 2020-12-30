@@ -30,20 +30,20 @@ async function createWindow() {
   view.setAutoResize({ x: true, y: true, horizontal: true, vertical: true });
 
   let status
-  view.webContents.on('did-fail-load', (event) => {
-    status = false
-    console.log('did-fail-load');
-    mainWindow.webContents.send("fromMain", 'did-fail-load');
-    console.log(event.sender.getURL());
+    // view.webContents.on('did-fail-load', (event) => {
+    //   status = false
+    //   console.log('did-fail-load');
+    //   mainWindow.webContents.send("fromMain", 'did-fail-load');
+    //   console.log(event.sender.getURL());
 
-    // In main process.
-  });
+  //   // In main process.
+  // });
 
   view.webContents.once('did-finish-load', (event) => {
     //console.log(event, status, 'ready-to-show');
     console.log(event.sender.getTitle());
-
-    //mainWindow.webContents.send("fromMain", 'did-fail-load');
+    if (event.sender.getTitle() == 'Account history - Winamax')
+      mainWindow.webContents.send("fromMain", 'did-finish-load');
 
     // In main process.
   });
