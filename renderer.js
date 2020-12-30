@@ -1,10 +1,8 @@
-// Called when message received from main process
-window.api.receive("toMain", (data) => {
+window.api.receive("fromMain", (data) => { // Called when message received from main process
   console.log(`Received ${data} from main process`);
 });
 
-// Send a message to the main process
-window.api.send("toMain", "some data");
+window.api.send("toMain", "some data"); // Send a message to the main process
 
 
 $('.top.menu .item').tab({

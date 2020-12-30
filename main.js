@@ -16,8 +16,10 @@ async function createWindow() {
     height: 800,
     backgroundColor: '#fff', // always set a bg color to enable font antialiasing!
     webPreferences: {
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
       preload: path.join(__dirname, './preload.js'),
-      contextIsolation: true,
+      //contextIsolation: true,
     }
   });
 
@@ -47,12 +49,6 @@ async function createWindow() {
   });
 
   ipcMain.on("toMain", (event, args) => {
-    // fs.readFile("path/to/file", (error, data) => {
-    //   // Do something with file contents
-
-    //   // Send result back to renderer process
-    //   win.webContents.send("fromMain", responseObj);
-    // });
     mainWindow.webContents.send("fromMain", 'responseObj');
   });
 }
