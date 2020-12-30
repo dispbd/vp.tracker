@@ -10,3 +10,4 @@ databases
 logs
 _front-crm
 acme-challenge
+out/
