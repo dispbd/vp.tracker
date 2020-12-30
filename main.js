@@ -41,15 +41,15 @@ async function createWindow() {
 
   view.webContents.once('did-finish-load', (event) => {
     //console.log(event, status, 'ready-to-show');
-    console.log(event.sender.getURL());
+    console.log(event.sender.getTitle());
 
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
   });
 
-  //view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
-  view.webContents.loadURL('https://www.google.com/');
+  view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
+  //view.webContents.loadURL('https://www.google.com/');
 
 }
 
