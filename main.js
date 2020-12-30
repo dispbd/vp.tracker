@@ -40,7 +40,7 @@ async function createWindow() {
 
   view.webContents.once('ready-to-show', (event) => {
     //console.log(event, status, 'ready-to-show');
-    console.log(event);
+    console.log(event.sender.id);
 
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
