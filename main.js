@@ -3,10 +3,6 @@ const { app, ipcMain, BrowserView, BrowserWindow } = require('electron');
 const path = require('path')
 const fs = require('fs')
 
-
-
-
-
 let mainWindow;
 async function createWindow() {
 
