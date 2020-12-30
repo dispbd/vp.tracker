@@ -20,15 +20,21 @@ async function createWindow() {
   mainWindow.loadFile('index.html'); // and load the index.html of the app.
   mainWindow.webContents.openDevTools(); // Open the DevTools.
 
-
   let view = new BrowserView();
   mainWindow.setBrowserView(view);
   view.setBounds({ x: 0, y: 200, width: mainWindow.getContentBounds().width, height: mainWindow.getContentBounds().height });
   view.setAutoResize({ x: true, y: true, horizontal: true, vertical: true });
 
   view.webContents.on('did-fail-load', (event) => {
-    console.log('did-fail-load');
+    console.log(event, 'did-fail-load');
     mainWindow.webContents.send("fromMain", 'did-fail-load');
+
+    // In main process.
+  });
+
+  view.webContents.on('ready-to-show', (event) => {
+    console.log(event, 'ready-to-show');
+    //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
   });
