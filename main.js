@@ -19,21 +19,27 @@ async function createWindow() {
 
   mainWindow.loadFile('index.html'); // and load the index.html of the app.
   mainWindow.webContents.openDevTools(); // Open the DevTools.
+  mainWindow.on('will-resize', (_event, newBounds) => { //const viewAnchor = { x: 0, y: 100 };
+    //     view.setBounds({...viewAnchor, width: newBounds.width, height: newBounds.height - viewAnchor.y });
+    //console.log(mainWindow.getBounds().height, mainWindow.getContentBounds().height);
+  });
 
   let view = new BrowserView();
   mainWindow.setBrowserView(view);
   view.setBounds({ x: 0, y: 200, width: mainWindow.getContentBounds().width, height: mainWindow.getContentBounds().height });
   view.setAutoResize({ x: true, y: true, horizontal: true, vertical: true });
 
+  let status
   view.webContents.on('did-fail-load', (event) => {
-    console.log(event, 'did-fail-load');
+    status = false
+    console.log('did-fail-load');
     mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
   });
 
-  view.webContents.on('ready-to-show', (event) => {
-    console.log(event, 'ready-to-show');
+  view.webContents.on('did-stop-loading', (event) => {
+    console.log(event, status, 'ready-to-show');
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
@@ -41,11 +47,6 @@ async function createWindow() {
 
   view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
 
-  //const viewAnchor = { x: 0, y: 100 };
-  mainWindow.on('will-resize', (_event, newBounds) => {
-    //     view.setBounds({...viewAnchor, width: newBounds.width, height: newBounds.height - viewAnchor.y });
-    //console.log(mainWindow.getBounds().height, mainWindow.getContentBounds().height);
-  });
 }
 
 
