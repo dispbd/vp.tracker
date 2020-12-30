@@ -1,17 +1,24 @@
 // Modules to control application life and create native browser window
-const { app, BrowserView, BrowserWindow } = require('electron');
-try {
-    require('electron-reloader')(module)
-} catch (_) {}
+const { app, ipcMain, BrowserView, BrowserWindow } = require('electron');
+const path = require('path')
+const fs = require('fs')
 
 
 
+
+
+let mainWindow;
 async function createWindow() {
+
     // Create the browser window.
-    let mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
-        webviewTag: true
+        backgroundColor: '#fff', // always set a bg color to enable font antialiasing!
+        webPreferences: {
+            preload: path.join(__dirname, './preload.js'),
+            contextIsolation: true,
+        }
     });
 
     mainWindow.loadFile('index.html'); // and load the index.html of the app.
@@ -26,8 +33,20 @@ async function createWindow() {
     view.webContents.on('did-fail-load', (event) => {
         console.log('did-fail-load');
 
+        // In main process.
     });
+
     view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
+
+    ipcMain.on('asynchronous-message', (event, arg) => {
+        console.log(arg) // prints "ping"
+        event.reply('asynchronous-reply', 'pong')
+    })
+
+    ipcMain.on('synchronous-message', (event, arg) => {
+        console.log(arg) // prints "ping"
+        event.returnValue = 'pong'
+    })
 
 
     const viewAnchor = { x: 0, y: 100 };
@@ -53,11 +72,22 @@ app.whenReady().then(() => {
 
 
 // Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
+// for applications and their menu bar to stay active until the user quits                  for applications and their menu bar to stay active until the user quitsfor applications and their menu bar to stay active until the user quitsfor applications and their menu bar to stay active until the user quitsfor applications and their menu bar to stay active until the user quitsfor applications and their menu bar to stay active until the user quitsfor applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit()
 })
+
+
+ipcMain.on("toMain", (event, args) => {
+    console.log(event, args);
+    /*fs.readFile("path/to/file", (error, data) => {
+        // Do something with file contents
+
+        // Send result back to renderer process
+        mainWindow.webContents.send("fromMain", responseObj);
+    });*/
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
