@@ -1,5 +1,5 @@
 // Called when message received from main process
-window.api.on("fromMain", (data) => {
+window.api.receive("fromMain", (data) => {
   console.log(`Received ${data} from main process`);
 });
 
