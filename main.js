@@ -40,6 +40,7 @@ async function createWindow() {
 
   view.webContents.on('ready-to-show', (event) => {
     console.log(event, status, 'ready-to-show');
+
     //mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
