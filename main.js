@@ -17,9 +17,7 @@ async function createWindow() {
     backgroundColor: '#fff', // always set a bg color to enable font antialiasing!
     webPreferences: {
       contextIsolation: true, // protect against prototype pollution
-      enableRemoteModule: false, // turn off remote
       preload: path.join(__dirname, './preload.js'),
-      //contextIsolation: true,
     }
   });
 
@@ -34,22 +32,17 @@ async function createWindow() {
 
   view.webContents.on('did-fail-load', (event) => {
     console.log('did-fail-load');
+    mainWindow.webContents.send("fromMain", 'did-fail-load');
 
     // In main process.
   });
 
   view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
 
-
-
-  const viewAnchor = { x: 0, y: 100 };
+  //const viewAnchor = { x: 0, y: 100 };
   mainWindow.on('will-resize', (_event, newBounds) => {
     //     view.setBounds({...viewAnchor, width: newBounds.width, height: newBounds.height - viewAnchor.y });
     //console.log(mainWindow.getBounds().height, mainWindow.getContentBounds().height);
-  });
-
-  ipcMain.on("toMain", (event, args) => {
-    mainWindow.webContents.send("fromMain", 'responseObj');
   });
 }
 
@@ -75,6 +68,10 @@ app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') app.quit()
 })
 
+
+ipcMain.on("toMain", (event, args) => {
+  mainWindow.webContents.send("fromMain", 'responseObj');
+});
 
 // ipcMain.on("toMain", (event, args) => {
 //   console.log(event, args);
