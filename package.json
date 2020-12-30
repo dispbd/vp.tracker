@@ -15,6 +15,6 @@
     ],
     "author": "dispbd",
     "devDependencies": {
-        "electron": "^10.1.5"
+        "electron": "^11.1.1"
     }
 }

@@ -38,21 +38,22 @@ async function createWindow() {
 
   view.webContents.loadURL('https://www.winamax.fr/en/my-account_account-history');
 
-  ipcMain.on('asynchronous-message', (event, arg) => {
-    console.log(arg) // prints "ping"
-    event.reply('asynchronous-reply', 'pong')
-  })
-
-  ipcMain.on('synchronous-message', (event, arg) => {
-    console.log(arg) // prints "ping"
-    event.returnValue = 'pong'
-  })
 
 
   const viewAnchor = { x: 0, y: 100 };
   mainWindow.on('will-resize', (_event, newBounds) => {
     //     view.setBounds({...viewAnchor, width: newBounds.width, height: newBounds.height - viewAnchor.y });
     //console.log(mainWindow.getBounds().height, mainWindow.getContentBounds().height);
+  });
+
+  ipcMain.on("toMain", (event, args) => {
+    // fs.readFile("path/to/file", (error, data) => {
+    //   // Do something with file contents
+
+    //   // Send result back to renderer process
+    //   win.webContents.send("fromMain", responseObj);
+    // });
+    mainWindow.webContents.send("fromMain", 'responseObj');
   });
 }
 
@@ -79,15 +80,15 @@ app.on('window-all-closed', function() {
 })
 
 
-ipcMain.on("toMain", (event, args) => {
-  console.log(event, args);
-  /*fs.readFile("path/to/file", (error, data) => {
-      // Do something with file contents
+// ipcMain.on("toMain", (event, args) => {
+//   console.log(event, args);
+//   /*fs.readFile("path/to/file", (error, data) => {
+//       // Do something with file contents
 
-      // Send result back to renderer process
-      mainWindow.webContents.send("fromMain", responseObj);
-  });*/
-});
+//       // Send result back to renderer process
+//       mainWindow.webContents.send("fromMain", responseObj);
+//   });*/
+// });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
