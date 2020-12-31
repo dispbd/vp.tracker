@@ -178,7 +178,11 @@ function contentload(url) {
     console.log(result) // должен быть объект JSON  из запрашиваемого вызова
     if (result.nickname == "") mainWindow.webContents.send("from", 'noAuth');
     else if (url) {
-      const browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+      const browser = await puppeteer.launch({
+          headless: false,
+          ignoreDefaultArgs: ["--disable-extensions", "--enable-automation"],
+          args: ['--no-sandbox', '--disable-setuid-sandbox', `--load-extension=${process.env.extdarkreader}`]
+        })
         //const browser = await puppeteer.launch()
       const page = await browser.newPage()
       await page.goto(`https://${url}`)
