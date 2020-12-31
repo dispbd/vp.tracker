@@ -178,64 +178,68 @@ function contentload(url) {
     console.log(result) // должен быть объект JSON  из запрашиваемого вызова
     if (result.nickname == "") mainWindow.webContents.send("from", 'noAuth');
     else if (url) {
-      if (url.includes('parser')) {
-        view.webContents.executeJavaScript(`( () => {
-									var parse = {};
-									var temp1 = document.querySelector('#page-content table');
-									temp1 === null? parse.table = "<table><tbody></tbody></table>" : parse.table = temp1.outerHTML;
-									var temp2 = document.querySelectorAll('#page-content .pagination li');
-									temp2.length > 1 ? ( temp2[temp2.length - 1].textContent == 'Next' ? parse.page = temp2[temp2.length - 2].textContent : parse.page = temp2[temp2.length - 1].textContent ) : parse.page = '1';
-									return parse;
-								})()`, true).then(res => {
-          //console.log(res);
-          var category = /to_display=\w+/gm.exec(url.toString())[0].replace('to_display=', '');
-          var page = /page=\d+/gm.exec(url.toString())[0].replace('page=', '');
-          console.log(page);
+      const browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+        //const browser = await puppeteer.launch()
+      const page = await browser.newPage()
+      await page.goto(`https://${url}`)
+        // if (url.includes('parser')) {
+        //   view.webContents.executeJavaScript(`( () => {
+        // 						var parse = {};
+        // 						var temp1 = document.querySelector('#page-content table');
+        // 						temp1 === null? parse.table = "<table><tbody></tbody></table>" : parse.table = temp1.outerHTML;
+        // 						var temp2 = document.querySelectorAll('#page-content .pagination li');
+        // 						temp2.length > 1 ? ( temp2[temp2.length - 1].textContent == 'Next' ? parse.page = temp2[temp2.length - 2].textContent : parse.page = temp2[temp2.length - 1].textContent ) : parse.page = '1';
+        // 						return parse;
+        // 					})()`, true).then(res => {
+        //     //console.log(res);
+        //     var category = /to_display=\w+/gm.exec(url.toString())[0].replace('to_display=', '');
+        //     var page = /page=\d+/gm.exec(url.toString())[0].replace('page=', '');
+        //     console.log(page);
 
-          switch (category) {
-            case 'deposits':
-              arr.deposits.push(res.table);
-              page == res.page ? goPage('withdrawals', 1) : goPage(category, page = +page + 1)
-              break;
-            case 'withdrawals':
-              arr.withdrawals.push(res.table);
-              page == res.page ? goPage('bonuses', 1) : goPage(category, page = +page + 1)
-              break;
-            case 'bonuses':
-              arr.bonuses.push(res.table);
-              page == res.page ? goPage('tournaments', 1) : goPage(category, page = +page + 1)
-              break;
-            case 'tournaments':
-              arr.tournaments.push(res.table);
-              page == res.page ? goPage('sitngo', 1) : goPage(category, page = +page + 1)
-              break;
-            case 'sitngo':
-              arr.sitngo.push(res.table);
-              page == res.page ? goPage('cashgame', 1) : goPage(category, page = +page + 1)
-              break;
-            case 'cashgame':
-              arr.cashgame.push(res.table);
-              page == res.page ? goPage('betting', 1) : goPage(category, page = +page + 1)
-              break;
-            case 'betting':
-              arr.betting.push(res.table);
-              page == res.page ? finishParse(arr) : goPage(category, page = +page + 1)
-              break;
-          }
-        });
+      //     switch (category) {
+      //       case 'deposits':
+      //         arr.deposits.push(res.table);
+      //         page == res.page ? goPage('withdrawals', 1) : goPage(category, page = +page + 1)
+      //         break;
+      //       case 'withdrawals':
+      //         arr.withdrawals.push(res.table);
+      //         page == res.page ? goPage('bonuses', 1) : goPage(category, page = +page + 1)
+      //         break;
+      //       case 'bonuses':
+      //         arr.bonuses.push(res.table);
+      //         page == res.page ? goPage('tournaments', 1) : goPage(category, page = +page + 1)
+      //         break;
+      //       case 'tournaments':
+      //         arr.tournaments.push(res.table);
+      //         page == res.page ? goPage('sitngo', 1) : goPage(category, page = +page + 1)
+      //         break;
+      //       case 'sitngo':
+      //         arr.sitngo.push(res.table);
+      //         page == res.page ? goPage('cashgame', 1) : goPage(category, page = +page + 1)
+      //         break;
+      //       case 'cashgame':
+      //         arr.cashgame.push(res.table);
+      //         page == res.page ? goPage('betting', 1) : goPage(category, page = +page + 1)
+      //         break;
+      //       case 'betting':
+      //         arr.betting.push(res.table);
+      //         page == res.page ? finishParse(arr) : goPage(category, page = +page + 1)
+      //         break;
+      //     }
+      //   });
 
-      } else {
-        arr = {
-          deposits: [],
-          withdrawals: [],
-          bonuses: [],
-          tournaments: [],
-          sitngo: [],
-          cashgame: [],
-          betting: [],
-        };
-        mainWindow.webContents.send("from", 'auth', result.nickname);
-      }
+      // } else {
+      //   arr = {
+      //     deposits: [],
+      //     withdrawals: [],
+      //     bonuses: [],
+      //     tournaments: [],
+      //     sitngo: [],
+      //     cashgame: [],
+      //     betting: [],
+      //   };
+      //   mainWindow.webContents.send("from", 'auth', result.nickname);
+      // }
     }
   });
 
